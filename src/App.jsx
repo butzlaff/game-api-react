@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import CreateDivGame from './components/CreateDivGame';
 
@@ -12,34 +12,24 @@ const options = {
   },
 };
 
-const dataApi = async () => {
-  const apiResult = await fetch(GAME_API, options);
-  const newDate = await apiResult.json();
-  const datas = await newDate;
-  return datas;
-};
-
 function App() {
   
   const [data, setData] = useState([]);
-  
-  const setDataApi = async () => {
-    setData(await dataApi());
-  }
 
-  // let results = [];
-
-  setDataApi();
+  useEffect(() => {
+    const dataApi = async () => {
+    const apiResult = await fetch(GAME_API, options);
+    const newDate = await apiResult.json();
+    const datas = await newDate;
+    setData(datas);
+  }; dataApi()
+  },[]);
 
   return (
     <div className="App">
-    {/* {data.forEach((game, index) => {
-      results = [...results,  <CreateDivGame game={game} index={index} />]
-    })}
-    {results} */}
-    {data.map((game, index) => <CreateDivGame game={game} index={index} /> ) }
+    {data.map((game, index) => <CreateDivGame key={index}game={game} /> ) }
     </div>
   )
-}
+};
 
 export default App
