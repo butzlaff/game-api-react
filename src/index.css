@@ -30,6 +30,12 @@ div h1 {
   align-self: center;
 }
 
+.loading {
+  color: white;
+  font-size: 5em;
+
+}
+
 .game {
   border: 1px solid white;
   margin: 1rem;

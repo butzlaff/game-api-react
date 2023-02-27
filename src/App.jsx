@@ -15,18 +15,25 @@ const options = {
 function App() {
   
   const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const dataApi = async () => {
-    const apiResult = await fetch(GAME_API, options);
-    const newDate = await apiResult.json();
-    const datas = await newDate;
-    setData(datas);
+    try {
+      const apiResult = await fetch(GAME_API, options);
+      const newDate = await apiResult.json();
+      const datas = await newDate;
+      setData(datas);
+    }
+    finally{
+      setIsLoading(false);
+    }
   }; dataApi()
   },[]);
 
   return (
     <div className="App">
+    { isLoading && <p className='loading'>Carregando...</p> }
     {data.map((game, index) => <CreateDivGame key={index}game={game} /> ) }
     </div>
   )
